@@ -1,0 +1,32 @@
+@use '@/styles/utils' as *;
+
+.header {
+  background-color: var(--sidebar);
+  box-shadow: 0 0 6px var(--sidebar-ring);
+  width: 100%;
+}
+
+.container {
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  @media ($laptop) {
+    padding: 0 4rem;
+  }
+}
+.link {
+  font-size: 3rem;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.main {
+  padding: 4rem;
+  min-height: calc(100vh - 8rem);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: var(--muted);
+}

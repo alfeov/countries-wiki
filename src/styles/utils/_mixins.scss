@@ -1,0 +1,14 @@
+@use './vars' as *;
+
+@mixin truncate() {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@mixin multiline-truncate($lines: 3) {
+  display: -webkit-box; /* Specify that we want to use webkit-box */
+  -webkit-box-orient: vertical; /* Indicate the text direction */
+  -webkit-line-clamp: $lines; /* Set the desired number of lines */
+  overflow: hidden; /* Hide any overflow */
+}

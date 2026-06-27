@@ -1,0 +1,14 @@
+// colors
+
+:root {
+  --color-primary: black;
+  --color-secondary: white;
+  --text-color-primary: black;
+  --text-color-secondary: white;
+  --text-color-notActive: gray;
+  --transition-duration-s: 200ms;
+  --transition-duration-m: 400ms;
+  --border-radius-s: 1rem;
+  --border-radius-m: 2rem;
+  --box-shadow: 0 0 6px var(--primary-color);
+}
