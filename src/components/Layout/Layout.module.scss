@@ -28,5 +28,10 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
   background-color: var(--muted);
+}
+
+:global(.dark) .main {
+  background-color: var(--background);
 }

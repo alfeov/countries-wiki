@@ -1,9 +1,16 @@
-import { Button } from '@/components/ui/button'
+import { Countries } from '@/components/Countries'
+import { FilterGroup } from '@/components/FilterGroup'
+import { FilterSearch } from '@/components/FilterSearch'
+import { FilterSelect } from '@/components/FilterSelect'
 
 export function CountriesPage() {
   return (
-    <div className='flex min-h-svh flex-col items-center justify-center'>
-      <Button>Click me</Button>
+    <div className='flex flex-col gap-[4rem]'>
+      <FilterGroup>
+        <FilterSearch />
+        <FilterSelect />
+      </FilterGroup>
+      <Countries />
     </div>
   )
 }

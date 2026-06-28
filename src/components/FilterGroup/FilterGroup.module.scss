@@ -1,0 +1,13 @@
+@use '@/styles/utils' as *;
+
+.group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+
+  @media ($tablet) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
