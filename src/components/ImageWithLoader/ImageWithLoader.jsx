@@ -3,9 +3,11 @@ import styles from './ImageWithLoader.module.scss'
 import noImage from './no-image.png'
 
 export function ImageWithLoader({
-  noImageText,
+  noImageText = '',
+  aspectRatio = '3/2',
   children,
-  className,
+  className = '',
+  style = {},
   ...props
 }) {
   const [imgLoading, setImgLoading] = useState(true)
@@ -21,8 +23,8 @@ export function ImageWithLoader({
   }
 
   return (
-    <>
-      {imgLoading && { children }}
+    <div className={styles.imgWrapper} style={{ aspectRatio: aspectRatio }}>
+      {imgLoading && children && children}
       {!imgError ? (
         <img
           {...props}
@@ -30,7 +32,7 @@ export function ImageWithLoader({
           style={{
             width: imgLoading ? '0' : '100%',
             opacity: imgLoading ? '0' : '1',
-            ...props.style,
+            ...style,
           }}
           loading='lazy'
           onError={handleError}
@@ -44,6 +46,7 @@ export function ImageWithLoader({
             style={{
               width: imgLoading ? '0' : '100%',
               opacity: imgLoading ? '0' : '1',
+              ...style,
             }}
             src={noImage}
             onLoad={handleLoad}
@@ -59,6 +62,6 @@ export function ImageWithLoader({
           </p>
         </>
       )}
-    </>
+    </div>
   )
 }
