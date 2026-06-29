@@ -7,6 +7,7 @@ export function ImageWithLoader({
   aspectRatio = '3/2',
   children,
   className = '',
+  wrapperClassName = '',
   style = {},
   ...props
 }) {
@@ -23,7 +24,10 @@ export function ImageWithLoader({
   }
 
   return (
-    <div className={styles.imgWrapper} style={{ aspectRatio: aspectRatio }}>
+    <div
+      className={`${styles.imgWrapper} ${wrapperClassName}`}
+      style={{ aspectRatio: aspectRatio }}
+    >
       {imgLoading && children && children}
       {!imgError ? (
         <img

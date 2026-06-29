@@ -1,1 +1,4 @@
 #
+
+- ShadCN UI
+- Tailwind

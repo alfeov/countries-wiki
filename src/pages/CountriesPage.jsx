@@ -5,7 +5,7 @@ import { FilterSelect } from '@/components/FilterSelect'
 
 export function CountriesPage() {
   return (
-    <div className='flex flex-col gap-[4rem]'>
+    <div>
       <FilterGroup>
         <FilterSearch />
         <FilterSelect />
