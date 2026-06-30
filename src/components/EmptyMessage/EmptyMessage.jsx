@@ -1,5 +1,5 @@
 import styles from './EmptyMessage.module.scss'
 
-export function EmptyMessage({ message }) {
-  return <p className={styles.message}>{message}</p>
+export function EmptyMessage({ children }) {
+  return <p className={styles.message}>{children}</p>
 }

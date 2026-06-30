@@ -5,12 +5,12 @@ export function ErrorBoundary() {
   const error = useRouteError()
 
   if (isRouteErrorResponse(error)) {
-    return <EmptyMessage message={error.message} />
+    return <EmptyMessage>{error.message}</EmptyMessage>
   }
 
   return (
-    <EmptyMessage
-      message={error instanceof Error ? error.message : 'Unknown error'}
-    />
+    <EmptyMessage>
+      {error instanceof Error ? error.message : 'Unknown error'}
+    </EmptyMessage>
   )
 }

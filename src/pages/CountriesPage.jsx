@@ -1,14 +1,14 @@
 import { CountriesList } from '@/components/CountriesList'
 import { FilterGroup } from '@/components/FilterGroup'
 import { FilterSearch } from '@/components/FilterSearch'
-import { FilterSelect } from '@/components/FilterSelect'
+import { FilterRegion } from '@/components/FilterRegion'
 
 export function CountriesPage() {
   return (
     <div>
       <FilterGroup>
         <FilterSearch />
-        <FilterSelect />
+        <FilterRegion />
       </FilterGroup>
       <CountriesList />
     </div>

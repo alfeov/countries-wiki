@@ -1,5 +1,5 @@
 import { SearchIcon } from 'lucide-react'
-import { Field, FieldDescription, FieldError } from '@/components/ui/field'
+import { Field, FieldDescription } from '@/components/ui/field'
 import { useController, useForm } from 'react-hook-form'
 import {
   InputGroup,
@@ -7,25 +7,26 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from '../ui/input-group'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSearch } from '@/store/search/searchActions'
+import { selectSearch } from '@/store/search/searchSelectors'
 
 export function FilterSearch() {
+  const searchState = useSelector(selectSearch)
+  const dispatch = useDispatch()
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      search: '',
+      search: searchState,
     },
-    mode: 'onBlur',
+    mode: 'onSubmit',
   })
   const {
     field: search,
-    fieldState: { error, isDirty, invalid },
+    fieldState: { error, invalid },
   } = useController({
     name: 'search',
     control: control,
     rules: {
-      required: {
-        value: true,
-        message: 'This field is required',
-      },
       pattern: {
         value: /^[A-Za-z ]+$/,
         message: 'This field can contain only latin symbols and spaces',
@@ -33,7 +34,7 @@ export function FilterSearch() {
     },
   })
 
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = (data) => dispatch(setSearch(data.search.trim()))
 
   return (
     <form
@@ -41,10 +42,10 @@ export function FilterSearch() {
       className='md:w-fit'
       autoComplete='off'
     >
-      <Field data-invalid={invalid && isDirty} className='gap-[0.5rem]'>
+      <Field data-invalid={invalid} className='gap-[0.5rem]'>
         <InputGroup className='md:w-fit'>
           <InputGroupInput
-            aria-invalid={invalid && isDirty}
+            aria-invalid={invalid}
             placeholder='Search for a country...'
             {...search}
           />
@@ -55,7 +56,7 @@ export function FilterSearch() {
           </InputGroupAddon>
         </InputGroup>
         <FieldDescription className='h-[1.5em] ml-[0.5rem] text-destructive'>
-          {isDirty && error?.message}
+          {error?.message}
         </FieldDescription>
       </Field>
     </form>
