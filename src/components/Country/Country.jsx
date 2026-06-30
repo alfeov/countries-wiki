@@ -17,6 +17,7 @@ export function Country() {
   const country = useSelector((state) =>
     selectCountryByAlpha3Code(state, params.alpha3Code),
   )
+
   const {
     flags,
     name,
