@@ -1,5 +1,4 @@
-import data from '@/mock/data.json'
-
+import { countriesApi } from '@/api/countriesApi'
 export const ADD_COUNTRIES = 'ADD_COUNTRIES'
 
 const addCountries = (countries) => ({
@@ -15,5 +14,10 @@ const setCountriesFetching = {
 
 export const loadCountries = () => (dispatch) => {
   dispatch(setCountriesFetching)
-  dispatch(addCountries(data))
+
+  countriesApi.getCountries().then((data) => dispatch(addCountries(data)))
 }
+
+// export const loadCountry = (countryAlpha3Code) => (dispatch) => {
+
+// }

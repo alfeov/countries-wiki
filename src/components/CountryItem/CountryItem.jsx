@@ -11,36 +11,37 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ImageWithLoader } from '@/components/ImageWithLoader'
 
 export function CountryItem(props) {
-  const { flags, name, population, region, capital, alpha3Code } = props
+  const { flag, names, population, region, capitals, codes } = props
 
   return (
     <Card className='pt-0'>
       <ImageWithLoader
-        src={flags.svg}
-        alt={name}
-        noImageText={name}
+        src={flag?.url_png || 'errorSrc'} // to perform empty string
+        alt={names?.common}
+        noImageText={names?.common}
         aspectRatio='3/2'
       >
         <Skeleton className='w-full m-[2rem]' />
       </ImageWithLoader>
       <CardHeader className='grow'>
-        <CardTitle>{name}</CardTitle>
+        <CardTitle>{names?.common}</CardTitle>
         <CardDescription>
           <ul>
             <li>
-              <strong>Population:</strong> {population.toLocaleString('en-US')}
+              <strong>Population:</strong> {population?.toLocaleString('en-US')}
             </li>
             <li>
               <strong>Region:</strong> {region}
             </li>
             <li>
-              <strong>Capital:</strong> {capital}
+              <strong>Capital:</strong>{' '}
+              {capitals?.map((capital) => capital?.name)?.join(', ')}
             </li>
           </ul>
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Link to={alpha3Code} className='w-full rounded-4xl'>
+        <Link to={codes?.alpha_3} className='w-full rounded-4xl'>
           <Button className='w-full'>View Details</Button>
         </Link>
       </CardFooter>

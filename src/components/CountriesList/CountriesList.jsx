@@ -9,7 +9,7 @@ import { EmptyMessage } from '@/components/EmptyMessage'
 export function CountriesList() {
   const search = useSelector(selectSearch)
   const region = useSelector(selectRegion)
-  const countries = useSelector((state) =>
+  const { countries, status, error } = useSelector((state) =>
     selectVisibleCountries(state, search, region),
   )
 
@@ -17,7 +17,7 @@ export function CountriesList() {
     <>
       <div className={styles.list}>
         {countries?.map((country) => (
-          <CountryItem key={country.alpha3Code} {...country} />
+          <CountryItem key={country.codes.alpha_3} {...country} />
         ))}
       </div>
       {countries.length === 0 && (search || region) && (

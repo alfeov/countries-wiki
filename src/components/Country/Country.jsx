@@ -10,6 +10,7 @@ import {
   selectBorderCountries,
   selectCountryByAlpha3Code,
 } from '@/store/countries/countriesSelector'
+import { useEffect } from 'react'
 
 export function Country() {
   const params = useParams()
@@ -19,24 +20,26 @@ export function Country() {
     selectCountryByAlpha3Code(state, params.alpha3Code),
   )
 
-  if (country === undefined) navigate('/404', { replace: true })
+  // if (country === undefined) navigate('/404', { replace: true })
+  // useEffect(() => {
+  // }, [country])
 
   const {
-    flags,
-    name,
-    nativeName,
+    flag,
+    names,
     population,
     region,
     subregion,
-    capital,
-    topLevelDomain,
+    capitals,
     currencies,
+    timezones,
+    area,
     languages,
     borders,
   } = country ?? {}
-  const borderCountries = useSelector((state) =>
-    selectBorderCountries(state, borders),
-  )
+  // const borderCountries = useSelector((state) =>
+  //   selectBorderCountries(state, borders),
+  // )
 
   return (
     <>
@@ -49,9 +52,9 @@ export function Country() {
         </Link>
         <div className='grid gap-[3rem] lg:gap-[4rem] lg:grid-cols-2'>
           <ImageWithLoader
-            src={flags?.svg}
-            alt={name}
-            noImageText={name}
+            src={flag?.url_png || 'errorSrc'}
+            alt={names?.common}
+            noImageText={names?.common}
             aspectRatio='3/2'
             wrapperClassName='rounded-2xl'
           >
@@ -59,17 +62,17 @@ export function Country() {
           </ImageWithLoader>
           <article className='grid gap-[2rem] content-start'>
             <header>
-              <h1 className='text-[3rem] font-[600]'>{name}</h1>
+              <h1 className='text-[3rem] font-[600]'>{names?.common}</h1>
             </header>
             <main className='grid gap-[2rem] lg:grid-cols-2'>
               <div>
                 <p>
-                  <strong>Native Name: </strong>
-                  {nativeName}
+                  <strong>Official Name: </strong>
+                  {names?.official}
                 </p>
                 <p>
                   <strong>Population: </strong>
-                  {population}
+                  {population?.toLocaleString('en-US')}
                 </p>
                 <p>
                   <strong>Region: </strong>
@@ -81,14 +84,10 @@ export function Country() {
                 </p>
                 <p>
                   <strong>Capital: </strong>
-                  {capital}
+                  {capitals?.map((capital) => capital.name)?.join(', ')}
                 </p>
               </div>
               <div>
-                <p>
-                  <strong>Top Level Domain: </strong>
-                  {topLevelDomain?.join(' ')}
-                </p>
                 <p>
                   <strong>Currencies: </strong>
                   {currencies?.map((currency) => currency.name)?.join(', ')}
@@ -97,13 +96,21 @@ export function Country() {
                   <strong>Languages: </strong>
                   {languages?.map((language) => language.name)?.join(', ')}
                 </p>
+                <p>
+                  <strong>Timezones: </strong>
+                  {timezones?.join(', ')}
+                </p>
+                <p>
+                  <strong>Area: </strong>
+                  {area?.kilometers?.toLocaleString('en-US')}km&sup2;
+                </p>
               </div>
             </main>
             {borders && (
               <footer className='grid gap-[2rem]'>
                 <h2 className='text-[2.4rem] font-[600]'>Border Countries:</h2>
                 <div className='flex flex-wrap gap-[1rem]'>
-                  {borderCountries?.map((country) => (
+                  {/* {borderCountries?.map((country) => (
                     <Link
                       to={'/' + country.alpha3Code}
                       key={country.alpha3Code}
@@ -114,7 +121,7 @@ export function Country() {
                         <ArrowUpRightIcon data-icon='inline-end' />
                       </Badge>
                     </Link>
-                  ))}
+                  ))} */}
                 </div>
               </footer>
             )}
