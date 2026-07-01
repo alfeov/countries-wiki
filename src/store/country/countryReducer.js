@@ -1,4 +1,8 @@
-import { ADD_COUNTRY, COUNTRY_FETCHING } from './countryActions'
+import {
+  ADD_COUNTRY,
+  COUNTRY_FETCHING,
+  SET_COUNTRY_ERROR,
+} from './countryActions'
 
 const initialState = {
   country: {},
@@ -11,13 +15,20 @@ export const countryReducer = (state = initialState, action) => {
     case ADD_COUNTRY:
       return {
         ...state,
-        status: 'idle',
         country: action.payload,
+        status: 'idle',
+        error: null,
       }
     case COUNTRY_FETCHING:
       return {
         ...state,
         status: 'fetching',
+      }
+    case SET_COUNTRY_ERROR:
+      return {
+        ...state,
+        status: 'idle',
+        error: action.payload,
       }
     default:
       return state

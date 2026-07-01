@@ -3,27 +3,27 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ArrowLeft, ArrowUpRightIcon } from 'lucide-react'
-import { Link, redirect, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { selectCountry } from '@/store/country/countrySelectors'
 import { loadCountry } from '@/store/country/countryActions'
+import { EmptyMessage } from '../EmptyMessage'
 
 export function Country() {
   const params = useParams()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { country, status, error } = useSelector(selectCountry)
 
   useEffect(() => {
     dispatch(loadCountry(params.countryAlpha3Code))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // if (country === undefined) navigate('/404', { replace: true })
-
   if (status === 'fetching') return <div>Loading...</div>
+  if (error) return <EmptyMessage>{error.message}</EmptyMessage>
 
   const {
     flag,

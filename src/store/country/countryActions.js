@@ -14,8 +14,14 @@ const setCountryFetching = {
   type: COUNTRY_FETCHING,
 }
 
-let isFetching = false
+export const SET_COUNTRY_ERROR = 'SET_COUNTRY_ERROR'
 
+const setCountryError = (error) => ({
+  type: SET_COUNTRY_ERROR,
+  payload: error,
+})
+
+let isFetching = false
 export const loadCountry = (countryAlpha3Code) => (dispatch, getState) => {
   if (isFetching) return
   isFetching = true
@@ -33,9 +39,16 @@ export const loadCountry = (countryAlpha3Code) => (dispatch, getState) => {
     return
   }
 
-  countriesApi.getCountry(countryAlpha3Code).then((data) => {
-    dispatch(addCountry(...data))
-    dispatch(addCountries(data))
-    isFetching = false
-  })
+  countriesApi
+    .getCountry(countryAlpha3Code)
+    .then((data) => {
+      if (data.length === 0)
+        throw new Error(
+          `Country with code ${countryAlpha3Code} not found (404)`,
+        )
+      dispatch(addCountry(...data))
+      dispatch(addCountries(data))
+      isFetching = false
+    })
+    .catch((error) => dispatch(setCountryError(error)))
 }

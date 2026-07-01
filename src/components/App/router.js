@@ -27,10 +27,6 @@ export const router = createBrowserRouter([
             path: '*',
             Component: NotFoundPage,
           },
-          {
-            path: '404', // page to redirect if redux selectors return undefined
-            Component: NotFoundPage,
-          },
         ],
       },
     ],
