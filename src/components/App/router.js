@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
             Component: CountriesPage,
           },
           {
-            path: ':alpha3Code',
+            path: ':countryAlpha3Code',
             Component: CountryPage,
           },
           {

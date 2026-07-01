@@ -1,7 +1,7 @@
 import { countriesApi } from '@/api/countriesApi'
 export const ADD_COUNTRIES = 'ADD_COUNTRIES'
 
-const addCountries = (countries) => ({
+export const addCountries = (countries) => ({
   type: ADD_COUNTRIES,
   payload: countries,
 })
@@ -14,10 +14,5 @@ const setCountriesFetching = {
 
 export const loadCountries = () => (dispatch) => {
   dispatch(setCountriesFetching)
-
   countriesApi.getCountries().then((data) => dispatch(addCountries(data)))
 }
-
-// export const loadCountry = (countryAlpha3Code) => (dispatch) => {
-
-// }

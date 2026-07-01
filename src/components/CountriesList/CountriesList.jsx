@@ -20,7 +20,7 @@ export function CountriesList() {
           <CountryItem key={country.codes.alpha_3} {...country} />
         ))}
       </div>
-      {countries.length === 0 && (search || region) && (
+      {countries?.length === 0 && (search || region) && (
         <EmptyMessage>There are no countries for your query</EmptyMessage>
       )}
     </>

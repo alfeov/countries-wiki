@@ -5,24 +5,25 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ArrowLeft, ArrowUpRightIcon } from 'lucide-react'
 import { Link, redirect, useNavigate } from 'react-router'
 import { useParams } from 'react-router'
-import { useSelector } from 'react-redux'
-import {
-  selectBorderCountries,
-  selectCountryByAlpha3Code,
-} from '@/store/countries/countriesSelector'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import { selectCountry } from '@/store/country/countrySelectors'
+import { loadCountry } from '@/store/country/countryActions'
 
 export function Country() {
   const params = useParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const country = useSelector((state) =>
-    selectCountryByAlpha3Code(state, params.alpha3Code),
-  )
+  const { country, status, error } = useSelector(selectCountry)
+
+  useEffect(() => {
+    dispatch(loadCountry(params.countryAlpha3Code))
+  }, [])
 
   // if (country === undefined) navigate('/404', { replace: true })
-  // useEffect(() => {
-  // }, [country])
+
+  if (status === 'fetching') return <div>Loading...</div>
 
   const {
     flag,
@@ -36,7 +37,8 @@ export function Country() {
     area,
     languages,
     borders,
-  } = country ?? {}
+  } = country
+
   // const borderCountries = useSelector((state) =>
   //   selectBorderCountries(state, borders),
   // )

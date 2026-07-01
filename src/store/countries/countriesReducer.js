@@ -11,7 +11,7 @@ export const countriesReducer = (state = initialState, action) => {
     case ADD_COUNTRIES:
       return {
         ...state,
-        countries: action.payload,
+        countries: [...state.countries, ...action.payload],
         status: 'idle',
       }
     case SET_COUNTRIES_FETCHING:
