@@ -1,8 +1,11 @@
 import axios from 'axios'
 
+const API_URL = import.meta.env.VITE_API_URL
+const API_KEY = import.meta.env.VITE_API_KEY
+
 export const api = axios.create({
-  baseURL: 'https://api.restcountries.com/countries/v5',
+  baseURL: API_URL,
   headers: {
-    Authorization: 'Bearer rc_live_9fc01d3004234ece86ffa4c6841a58c6',
+    Authorization: `Bearer ${API_KEY}`,
   },
 })

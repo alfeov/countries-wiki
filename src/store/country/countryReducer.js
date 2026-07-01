@@ -14,7 +14,6 @@ export const countryReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COUNTRY:
       return {
-        ...state,
         country: action.payload,
         status: 'idle',
         error: null,

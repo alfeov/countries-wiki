@@ -6,4 +6,11 @@ export const countriesApi = {
     api
       .get(`/codes.alpha_3/${countryAlpha3Code}`)
       .then((res) => res.data.data.objects),
+  getCountriesByParams: (search = '', region = '') => {
+    const params = {}
+    if (search) params.q = search
+    if (region) params.region = region
+
+    return api.get('', { params }).then((res) => res.data.data.objects)
+  },
 }

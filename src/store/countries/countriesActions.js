@@ -12,7 +12,25 @@ const setCountriesFetching = {
   type: SET_COUNTRIES_FETCHING,
 }
 
-export const loadCountries = () => (dispatch) => {
+export const SET_COUNTRIES_ERROR = 'SET_COUNTRIES_ERROR'
+
+const setCountriesError = (error) => ({
+  type: SET_COUNTRIES_ERROR,
+  payload: error,
+})
+
+let isFetching = false
+export const loadCountries = (search, region) => (dispatch) => {
+  if (isFetching) return
+  isFetching = true
   dispatch(setCountriesFetching)
-  countriesApi.getCountries().then((data) => dispatch(addCountries(data)))
+  countriesApi
+    .getCountriesByParams(search, region)
+    .then((data) => {
+      dispatch(addCountries(data))
+    })
+    .catch((error) => dispatch(setCountriesError(error)))
+    .finally(() => {
+      isFetching = false
+    })
 }

@@ -22,22 +22,11 @@ const setCountryError = (error) => ({
 })
 
 let isFetching = false
-export const loadCountry = (countryAlpha3Code) => (dispatch, getState) => {
+export const loadCountry = (countryAlpha3Code) => (dispatch) => {
   if (isFetching) return
   isFetching = true
 
   dispatch(setCountryFetching)
-
-  const state = getState()
-
-  const countryInCache = state.countries.countries.find(
-    (country) => country.codes.alpha_3 === countryAlpha3Code,
-  )
-
-  if (countryInCache !== undefined) {
-    dispatch(addCountry(countryInCache))
-    return
-  }
 
   countriesApi
     .getCountry(countryAlpha3Code)
@@ -47,8 +36,9 @@ export const loadCountry = (countryAlpha3Code) => (dispatch, getState) => {
           `Country with code ${countryAlpha3Code} not found (404)`,
         )
       dispatch(addCountry(...data))
-      dispatch(addCountries(data))
-      isFetching = false
     })
     .catch((error) => dispatch(setCountryError(error)))
+    .finally(() => {
+      isFetching = false
+    })
 }
