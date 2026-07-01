@@ -1,6 +1,6 @@
 import {
-  ADD_COUNTRY,
-  COUNTRY_FETCHING,
+  SET_COUNTRY,
+  SET_COUNTRY_FETCHING,
   SET_COUNTRY_ERROR,
 } from './countryActions'
 
@@ -12,13 +12,13 @@ const initialState = {
 
 export const countryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_COUNTRY:
+    case SET_COUNTRY:
       return {
         country: action.payload,
         status: 'idle',
         error: null,
       }
-    case COUNTRY_FETCHING:
+    case SET_COUNTRY_FETCHING:
       return {
         ...state,
         status: 'fetching',

@@ -1,8 +1,8 @@
 import { countriesApi } from '@/api/countriesApi'
-export const ADD_COUNTRIES = 'ADD_COUNTRIES'
+export const SET_COUNTRIES = 'SET_COUNTRIES'
 
-export const addCountries = (countries) => ({
-  type: ADD_COUNTRIES,
+export const setCountries = (countries) => ({
+  type: SET_COUNTRIES,
   payload: countries,
 })
 
@@ -27,7 +27,7 @@ export const loadCountries = (search, region) => (dispatch) => {
   countriesApi
     .getCountriesByParams(search, region)
     .then((data) => {
-      dispatch(addCountries(data))
+      dispatch(setCountries(data))
     })
     .catch((error) => dispatch(setCountriesError(error)))
     .finally(() => {

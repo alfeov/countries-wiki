@@ -1,29 +1,29 @@
 import {
-  SET_COUNTRIES,
-  SET_COUNTRIES_ERROR,
-  SET_COUNTRIES_FETCHING,
-} from './countriesActions'
+  SET_BORDERS,
+  SET_BORDERS_ERROR,
+  SET_BORDERS_FETCHING,
+} from './bordersActions'
 
 const initialState = {
-  countries: [],
+  borders: [],
   status: 'idle',
   error: null,
 }
 
-export const countriesReducer = (state = initialState, action) => {
+export const bordersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_COUNTRIES:
+    case SET_BORDERS:
       return {
-        ...state,
-        countries: action.payload,
+        borders: action.payload,
         status: 'idle',
+        error: null,
       }
-    case SET_COUNTRIES_FETCHING:
+    case SET_BORDERS_FETCHING:
       return {
         ...state,
         status: 'fetching',
       }
-    case SET_COUNTRIES_ERROR:
+    case SET_BORDERS_ERROR:
       return {
         ...state,
         status: 'idle',

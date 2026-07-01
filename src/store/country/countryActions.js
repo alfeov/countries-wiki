@@ -1,17 +1,16 @@
 import { countriesApi } from '@/api/countriesApi'
-import { addCountries } from '../countries/countriesActions'
 
-export const ADD_COUNTRY = 'ADD_COUNTRY'
+export const SET_COUNTRY = 'SET_COUNTRY'
 
-const addCountry = (country) => ({
-  type: ADD_COUNTRY,
+const setCountry = (country) => ({
+  type: SET_COUNTRY,
   payload: country,
 })
 
-export const COUNTRY_FETCHING = 'COUNTRY_FETCHING'
+export const SET_COUNTRY_FETCHING = 'SET_COUNTRY_FETCHING'
 
 const setCountryFetching = {
-  type: COUNTRY_FETCHING,
+  type: SET_COUNTRY_FETCHING,
 }
 
 export const SET_COUNTRY_ERROR = 'SET_COUNTRY_ERROR'
@@ -35,7 +34,7 @@ export const loadCountry = (countryAlpha3Code) => (dispatch) => {
         throw new Error(
           `Country with code ${countryAlpha3Code} not found (404)`,
         )
-      dispatch(addCountry(...data))
+      dispatch(setCountry(...data))
     })
     .catch((error) => dispatch(setCountryError(error)))
     .finally(() => {

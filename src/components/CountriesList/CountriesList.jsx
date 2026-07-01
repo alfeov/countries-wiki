@@ -22,7 +22,9 @@ export function CountriesList() {
   return (
     <>
       {status === 'fetching' && <div>Loading...</div>}
-      {error && <EmptyMessage>{error.message}</EmptyMessage>}
+      {status !== 'fetching' && error && (
+        <EmptyMessage>{error.message}</EmptyMessage>
+      )}
       {status !== 'fetching' && !error && countries?.length === 0 && (
         <EmptyMessage>There are no countries for your query</EmptyMessage>
       )}

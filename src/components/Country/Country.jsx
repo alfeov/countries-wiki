@@ -40,7 +40,9 @@ export function Country() {
   return (
     <>
       {status === 'fetching' && <div>Loading...</div>}
-      {error && <EmptyMessage>{error.message}</EmptyMessage>}
+      {status !== 'fetching' && error && (
+        <EmptyMessage>{error.message}</EmptyMessage>
+      )}
       {status !== 'fetching' && !error && (
         <div className='grid gap-[3rem]'>
           <Link to='/' className='w-fit rounded-4xl'>
@@ -105,7 +107,7 @@ export function Country() {
                   </p>
                 </div>
               </main>
-              {/* {borders && <BorderCountries borders={borders} />} */}
+              {borders && <BorderCountries borders={borders} />}
             </article>
           </div>
         </div>
