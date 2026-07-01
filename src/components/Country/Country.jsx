@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ArrowLeft, ArrowUpRightIcon } from 'lucide-react'
-import { Link } from 'react-router'
+import { Link, redirect, useNavigate } from 'react-router'
 import { useParams } from 'react-router'
 import { useSelector } from 'react-redux'
 import {
@@ -13,10 +13,13 @@ import {
 
 export function Country() {
   const params = useParams()
+  const navigate = useNavigate()
 
   const country = useSelector((state) =>
     selectCountryByAlpha3Code(state, params.alpha3Code),
   )
+
+  if (country === undefined) navigate('/404', { replace: true })
 
   const {
     flags,

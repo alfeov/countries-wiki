@@ -4,6 +4,7 @@ import { ErrorBoundaryOutlet } from '@/components/ErrorBoundaryOutlet/ErrorBound
 import { Layout } from '@/components/Layout/Layout'
 import { CountriesPage } from '@/pages/CountriesPage'
 import { CountryPage } from '@/pages/CountryPage'
+import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,14 @@ export const router = createBrowserRouter([
           {
             path: ':alpha3Code',
             Component: CountryPage,
+          },
+          {
+            path: '*',
+            Component: NotFoundPage,
+          },
+          {
+            path: '404', // page to redirect if redux selectors return undefined
+            Component: NotFoundPage,
           },
         ],
       },
