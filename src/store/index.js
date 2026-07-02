@@ -1,9 +1,10 @@
 import { applyMiddleware, createStore } from 'redux'
 import { composeWithDevTools } from '@redux-devtools/extension'
 import { rootReducer } from './rootReducer'
-import { thunk } from 'redux-thunk'
+import { withExtraArgument } from 'redux-thunk'
+import { countriesApi } from '@/api/countriesApi'
 
 export const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunk)),
+  composeWithDevTools(applyMiddleware(withExtraArgument({ countriesApi }))),
 )

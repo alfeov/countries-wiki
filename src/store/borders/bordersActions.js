@@ -1,19 +1,15 @@
-import { countriesApi } from '@/api/countriesApi'
-
 export const SET_BORDERS = 'SET_BORDERS'
+export const SET_BORDERS_FETCHING = 'SET_BORDERS_FETCHING'
+export const SET_BORDERS_ERROR = 'SET_BORDERS_ERROR'
 
 const setBorders = (borders) => ({
   type: SET_BORDERS,
   payload: borders,
 })
 
-export const SET_BORDERS_FETCHING = 'SET_BORDERS_FETCHING'
-
 const setBordersFetching = {
   type: SET_BORDERS_FETCHING,
 }
-
-export const SET_BORDERS_ERROR = 'SET_BORDERS_ERROR'
 
 const setBordersError = (error) => ({
   type: SET_BORDERS_ERROR,
@@ -23,7 +19,7 @@ const setBordersError = (error) => ({
 let isFetching = false
 export const loadBorders =
   (borders = []) =>
-  (dispatch) => {
+  (dispatch, getState, { countriesApi }) => {
     if (isFetching) return
     isFetching = true
 
