@@ -5,30 +5,38 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadBorders } from '@/store/borders/bordersActions'
 import { selectAllBorders } from '@/store/borders/bordersSelectors'
+import { Skeleton } from '@/components/ui/skeleton'
+import { ErrorEmpty } from '@/components/ErrorEmpty'
 
-export function BorderCountries({ borders: bordersCodes }) {
-  const { borders, state, error } = useSelector(selectAllBorders)
+export function BorderCountries({ bordersCodes }) {
+  const { borders, status, error } = useSelector(selectAllBorders)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (bordersCodes.length !== 0) dispatch(loadBorders(bordersCodes))
+    dispatch(loadBorders(bordersCodes))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <footer className='grid gap-[2rem]'>
       <h2 className='text-[2.4rem] font-[600]'>Border Countries:</h2>
       <div className='flex flex-wrap gap-[1rem]'>
-        {bordersCodes.length === 0 && (
-          <p>There are no borders of this country</p>
-        )}
-        {bordersCodes.length !== 0 &&
+        {status === 'fetching' &&
+          bordersCodes?.map((border) => (
+            <Skeleton
+              className='h-[2.6rem] w-[10rem] rounded-3xl p-[1.2rem] bg-muted-foreground dark:bg-muted'
+              key={border + 'skeleton'}
+            />
+          ))}
+        {status === 'error' && <ErrorEmpty>{error.message}</ErrorEmpty>}
+        {status === 'idle' &&
           borders?.flat()?.map((country) => (
             <Link
               to={'/' + country.codes.alpha_3}
               key={country.codes.alpha_3}
               className='w-fit rounded-3xl'
             >
-              <Badge className='text-[1.4rem] p-[1.2rem]'>
+              <Badge className='text-[1.4rem] p-[1.2rem] h-[2.6rem]'>
                 {country.names.common}
                 <ArrowUpRightIcon data-icon='inline-end' />
               </Badge>

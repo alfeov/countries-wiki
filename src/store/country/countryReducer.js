@@ -26,7 +26,7 @@ export const countryReducer = (state = initialState, action) => {
     case SET_COUNTRY_ERROR:
       return {
         ...state,
-        status: 'idle',
+        status: 'error',
         error: action.payload,
       }
     default:

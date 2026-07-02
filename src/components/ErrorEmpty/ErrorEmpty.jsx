@@ -7,17 +7,15 @@ import {
   EmptyTitle,
 } from '@/components/ui/empty'
 
-export function NotFoundPage() {
+export function ErrorEmpty({ children }) {
   return (
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant='icon'>
           <CircleX className='size-6' />
         </EmptyMedia>
-        <EmptyTitle>404 - Not Found</EmptyTitle>
-        <EmptyDescription>
-          The page you&apos;re looking for doesn&apos;t exist.
-        </EmptyDescription>
+        <EmptyTitle>Something went wrong</EmptyTitle>
+        <EmptyDescription>{children}</EmptyDescription>
       </EmptyHeader>
     </Empty>
   )

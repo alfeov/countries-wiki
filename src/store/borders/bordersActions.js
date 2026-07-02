@@ -21,20 +21,24 @@ const setBordersError = (error) => ({
 })
 
 let isFetching = false
-export const loadBorders = (borders) => (dispatch) => {
-  if (isFetching) return
-  isFetching = true
+export const loadBorders =
+  (borders = []) =>
+  (dispatch) => {
+    if (isFetching) return
+    isFetching = true
 
-  dispatch(setBordersFetching)
+    dispatch(setBordersFetching)
 
-  const promises = borders.map((border) => countriesApi.getCountryName(border))
+    const promises = borders?.map((border) =>
+      countriesApi.getCountryName(border),
+    )
 
-  Promise.all(promises)
-    .then((data) => {
-      dispatch(setBorders(data))
-    })
-    .catch((error) => dispatch(setBordersError(error)))
-    .finally(() => {
-      isFetching = false
-    })
-}
+    Promise.all(promises)
+      .then((data) => {
+        dispatch(setBorders(data))
+      })
+      .catch((error) => dispatch(setBordersError(error)))
+      .finally(() => {
+        isFetching = false
+      })
+  }

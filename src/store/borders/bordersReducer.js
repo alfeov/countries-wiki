@@ -26,7 +26,7 @@ export const bordersReducer = (state = initialState, action) => {
     case SET_BORDERS_ERROR:
       return {
         ...state,
-        status: 'idle',
+        status: 'error',
         error: action.payload,
       }
     default:

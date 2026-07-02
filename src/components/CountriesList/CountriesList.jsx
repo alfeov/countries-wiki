@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectAllCountries } from '@/store/countries/countriesSelector'
 import { selectSearch } from '@/store/search/searchSelectors'
 import { selectRegion } from '@/store/region/regionSelectors'
-import { EmptyMessage } from '@/components/EmptyMessage'
 import { useEffect } from 'react'
 import { loadCountries } from '@/store/countries/countriesActions'
+import { SpinnerEmpty } from '@/components/SpinnerEmpty'
+import { ErrorEmpty } from '@/components/ErrorEmpty'
 
 export function CountriesList() {
   const dispatch = useDispatch()
@@ -21,14 +22,12 @@ export function CountriesList() {
 
   return (
     <>
-      {status === 'fetching' && <div>Loading...</div>}
-      {status !== 'fetching' && error && (
-        <EmptyMessage>{error.message}</EmptyMessage>
+      {status === 'fetching' && <SpinnerEmpty>Loading countries</SpinnerEmpty>}
+      {status === 'error' && <ErrorEmpty>{error.message}</ErrorEmpty>}
+      {status === 'idle' && countries?.length === 0 && (
+        <ErrorEmpty>There are no countries for your query</ErrorEmpty>
       )}
-      {status !== 'fetching' && !error && countries?.length === 0 && (
-        <EmptyMessage>There are no countries for your query</EmptyMessage>
-      )}
-      {status !== 'fetching' && !error && (
+      {status === 'idle' && (
         <div className={styles.list}>
           {countries?.map((country) => (
             <CountryItem key={country.codes.alpha_3} {...country} />

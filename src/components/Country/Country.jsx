@@ -9,8 +9,9 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ArrowLeft } from 'lucide-react'
 import { selectCountry } from '@/store/country/countrySelectors'
 import { loadCountry } from '@/store/country/countryActions'
-import { EmptyMessage } from '@/components/EmptyMessage'
 import { BorderCountries } from '@/components/BorderCountries'
+import { SpinnerEmpty } from '@/components/SpinnerEmpty'
+import { ErrorEmpty } from '@/components/ErrorEmpty'
 
 export function Country() {
   const params = useParams()
@@ -39,11 +40,13 @@ export function Country() {
 
   return (
     <>
-      {status === 'fetching' && <div>Loading...</div>}
-      {status !== 'fetching' && error && (
-        <EmptyMessage>{error.message}</EmptyMessage>
+      {status === 'fetching' && (
+        <SpinnerEmpty>
+          Loading country with code {params.countryAlpha3Code}
+        </SpinnerEmpty>
       )}
-      {status !== 'fetching' && !error && (
+      {status === 'error' && <ErrorEmpty>{error.message}</ErrorEmpty>}
+      {status === 'idle' && (
         <div className='grid gap-[3rem]'>
           <Link to='/' className='w-fit rounded-4xl'>
             <Button>
@@ -59,7 +62,7 @@ export function Country() {
               aspectRatio='3/2'
               wrapperClassName='rounded-2xl'
             >
-              <Skeleton className='w-full bg-background' />
+              <Skeleton className='w-full bg-muted-foreground dark:bg-muted' />
             </ImageWithLoader>
             <article className='grid gap-[2rem] content-start'>
               <header>
@@ -81,21 +84,24 @@ export function Country() {
                   </p>
                   <p>
                     <strong>Sub Region: </strong>
-                    {subregion}
+                    {subregion || '-'}
                   </p>
                   <p>
                     <strong>Capital: </strong>
-                    {capitals?.map((capital) => capital.name)?.join(', ')}
+                    {capitals?.map((capital) => capital.name)?.join(', ') ||
+                      '-'}
                   </p>
                 </div>
                 <div>
                   <p>
                     <strong>Currencies: </strong>
-                    {currencies?.map((currency) => currency.name)?.join(', ')}
+                    {currencies?.map((currency) => currency.name)?.join(', ') ||
+                      '-'}
                   </p>
                   <p>
                     <strong>Languages: </strong>
-                    {languages?.map((language) => language.name)?.join(', ')}
+                    {languages?.map((language) => language.name)?.join(', ') ||
+                      '-'}
                   </p>
                   <p>
                     <strong>Timezones: </strong>
@@ -107,7 +113,9 @@ export function Country() {
                   </p>
                 </div>
               </main>
-              {borders && <BorderCountries borders={borders} />}
+              {borders?.length !== 0 && (
+                <BorderCountries bordersCodes={borders} />
+              )}
             </article>
           </div>
         </div>

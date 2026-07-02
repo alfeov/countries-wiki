@@ -1,16 +1,16 @@
 import { isRouteErrorResponse, useRouteError } from 'react-router'
-import { EmptyMessage } from '@/components/EmptyMessage'
+import { ErrorEmpty } from '@/components/ErrorEmpty'
 
 export function ErrorBoundary() {
   const error = useRouteError()
 
   if (isRouteErrorResponse(error)) {
-    return <EmptyMessage>{error.message}</EmptyMessage>
+    return <ErrorEmpty>{error.message}</ErrorEmpty>
   }
 
   return (
-    <EmptyMessage>
+    <ErrorEmpty>
       {error instanceof Error ? error.message : 'Unknown error'}
-    </EmptyMessage>
+    </ErrorEmpty>
   )
 }
