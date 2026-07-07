@@ -6,9 +6,12 @@ import {
 
 export const loadCountries = createAsyncThunk(
   '@@countries/load',
-  async (filters, { extra: { countriesApi } }) => {
-    return await countriesApi.getCountriesByParams(filters)
-    //  todo     .catch((error) => dispatch(setCountriesError(error)))
+  async (filters, { extra: { countriesApi }, rejectWithValue }) => {
+    try {
+      return await countriesApi.getCountriesByParams(filters)
+    } catch (error) {
+      return rejectWithValue(error)
+    }
   },
   {
     condition: (_, { getState }) => getState().countries.status !== 'fetching',
@@ -37,7 +40,7 @@ const countriesSlice = createSlice({
       })
       .addCase(loadCountries.rejected, (state, action) => {
         state.status = 'error'
-        state.error = action.error
+        state.error = action.payload || action.error
       })
   },
 })

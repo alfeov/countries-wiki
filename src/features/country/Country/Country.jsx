@@ -7,11 +7,10 @@ import { ImageWithLoader } from '@/shared/ui/ImageWithLoader'
 import { Button } from '@/shared/ui/button'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { ArrowLeft } from 'lucide-react'
-import { selectCountry } from '@/features/country/countrySelectors'
-import { loadCountry } from '@/features/country/countryActions'
 import { BorderCountries } from '@/features/borders/BorderCountries'
 import { SpinnerEmpty } from '@/shared/ui/SpinnerEmpty'
 import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
+import { loadCountry, selectCountry } from '@/features/country/countrySlice'
 
 export function Country() {
   const params = useParams()
@@ -31,7 +30,7 @@ export function Country() {
     area,
     languages,
     borders,
-  } = country
+  } = country?.[0] ?? {}
 
   useEffect(() => {
     dispatch(loadCountry(params.countryAlpha3Code))
