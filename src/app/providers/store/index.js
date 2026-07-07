@@ -1,10 +1,14 @@
-import { applyMiddleware, createStore } from 'redux'
-import { composeWithDevTools } from '@redux-devtools/extension'
 import { rootReducer } from './rootReducer'
-import { withExtraArgument } from 'redux-thunk'
 import { countriesApi } from '@/shared/api/countriesApi'
+import { configureStore } from '@reduxjs/toolkit'
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(withExtraArgument({ countriesApi }))),
-)
+export const store = configureStore({
+  reducer: rootReducer,
+  devTools: import.meta.env.PROD !== 'production',
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: { countriesApi },
+      },
+    }),
+})

@@ -6,8 +6,7 @@ export const countriesApi = {
     api
       .get(`/codes.alpha_3/${countryAlpha3Code}`)
       .then((res) => res.data.data.objects),
-  getCountriesByParams: (search = '', region = '') => {
-    // flag, names, population, region, capitals, codes
+  getCountriesByParams: ({ search = '', region = '' }) => {
     const params = {
       response_fields:
         'flag.url_png,names.common,codes.alpha_3,population,region,capitals',

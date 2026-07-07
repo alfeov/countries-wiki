@@ -2,8 +2,7 @@ import { CountryItem } from '@/features/countries/CountryItem'
 import styles from './CountriesList.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectAllCountries } from '@/features/countries/countriesSelector'
-import { selectSearch } from '@/features/search/searchSelectors'
-import { selectRegion } from '@/features/region/regionSelectors'
+import { selectFilters } from '@/features/filters/filtersSlice'
 import { useEffect } from 'react'
 import { loadCountries } from '@/features/countries/countriesActions'
 import { SpinnerEmpty } from '@/shared/ui/SpinnerEmpty'
@@ -11,14 +10,13 @@ import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
 
 export function CountriesList() {
   const dispatch = useDispatch()
-  const search = useSelector(selectSearch)
-  const region = useSelector(selectRegion)
+  const filters = useSelector(selectFilters)
   const { countries, status, error } = useSelector(selectAllCountries)
 
   useEffect(() => {
-    dispatch(loadCountries(search, region))
+    dispatch(loadCountries(filters))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, region])
+  }, [filters])
 
   return (
     <>

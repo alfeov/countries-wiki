@@ -7,9 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select'
-import { selectRegion } from '@/features/region/regionSelectors'
 import { useDispatch, useSelector } from 'react-redux'
-import { setRegion } from '@/features/region/regionActions'
+import { selectRegion, setRegion } from '@/features/filters/filtersSlice'
 
 export function FilterRegion() {
   const region = useSelector(selectRegion)

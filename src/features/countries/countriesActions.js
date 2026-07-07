@@ -18,13 +18,14 @@ const setCountriesError = (error) => ({
 
 let isFetching = false
 export const loadCountries =
-  (search, region) =>
-  (dispatch, getState, { countriesApi }) => {
+  (filters) =>
+  (dispatch, _, { countriesApi }) => {
     if (isFetching) return
     isFetching = true
+
     dispatch(setCountriesFetching)
     countriesApi
-      .getCountriesByParams(search, region)
+      .getCountriesByParams(filters)
       .then((data) => {
         dispatch(setCountries(data))
       })

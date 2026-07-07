@@ -8,8 +8,7 @@ import {
   InputGroupInput,
 } from '@/shared/ui/input-group'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectSearch } from '@/features/search/searchSelectors'
-import { setSearch } from '@/features/search/searchActions'
+import { selectSearch, setSearch } from '@/features/filters/filtersSlice'
 
 export function FilterSearch() {
   const searchState = useSelector(selectSearch)
