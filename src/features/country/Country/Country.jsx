@@ -112,7 +112,7 @@ export function Country() {
                   </p>
                 </div>
               </main>
-              {borders?.length !== 0 && (
+              {borders?.length > 0 && (
                 <BorderCountries bordersCodes={borders} />
               )}
             </article>

@@ -35,7 +35,7 @@ const countriesSlice = createSlice({
         state.error = null
       })
       .addCase(loadCountries.fulfilled, (state, action) => {
-        countriesAdapter.addMany(state, action.payload)
+        countriesAdapter.setAll(state, action.payload)
         state.status = 'idle'
       })
       .addCase(loadCountries.rejected, (state, action) => {

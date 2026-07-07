@@ -15,6 +15,9 @@ export const loadCountry = createAsyncThunk(
       return rejectWithValue(error)
     }
   },
+  {
+    condition: (_, { getState }) => getState().country.status !== 'fetching',
+  },
 )
 
 const countrySlice = createSlice({

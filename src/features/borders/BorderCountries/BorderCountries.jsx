@@ -3,10 +3,9 @@ import { Badge } from '@/shared/ui/badge'
 import { ArrowUpRightIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadBorders } from '@/features/borders/bordersActions'
-import { selectAllBorders } from '@/features/borders/bordersSelectors'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
+import { loadBorders, selectAllBorders } from '@/features/borders/bordersSlice'
 
 export function BorderCountries({ bordersCodes }) {
   const { borders, status, error } = useSelector(selectAllBorders)
