@@ -1,4 +1,4 @@
-import { Country } from '@/components/Country'
+import { Country } from '@/features/country/Country'
 
 export function CountryPage() {
   return <Country />

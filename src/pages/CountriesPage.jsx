@@ -1,16 +1,16 @@
-import { CountriesList } from '@/components/CountriesList'
-import { FilterGroup } from '@/components/FilterGroup'
-import { FilterSearch } from '@/components/FilterSearch'
-import { FilterRegion } from '@/components/FilterRegion'
+import { CountriesList } from '@/features/countries/CountriesList'
+import { FilterGroup } from '@/shared/ui/FilterGroup'
+import { FilterSearch } from '@/features/search/FilterSearch'
+import { FilterRegion } from '@/features/region/FilterRegion'
 
 export function CountriesPage() {
   return (
-    <div>
+    <>
       <FilterGroup>
         <FilterSearch />
         <FilterRegion />
       </FilterGroup>
       <CountriesList />
-    </div>
+    </>
   )
 }
