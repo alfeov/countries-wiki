@@ -1,7 +1,4 @@
 import { Link } from 'react-router'
-import { useParams } from 'react-router'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
 import { ImageWithLoader } from '@/shared/ui/ImageWithLoader'
 import { Button } from '@/shared/ui/button'
@@ -10,13 +7,10 @@ import { ArrowLeft } from 'lucide-react'
 import { BorderCountries } from '@/features/borders/BorderCountries'
 import { SpinnerEmpty } from '@/shared/ui/SpinnerEmpty'
 import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
-import { loadCountry, selectCountry } from '@/features/country/countrySlice'
+import { useCountry } from '@/features/country/useCountry'
 
 export function Country() {
-  const params = useParams()
-  const dispatch = useDispatch()
-
-  const { country, status, error } = useSelector(selectCountry)
+  const { country, status, error, countryCode } = useCountry()
 
   const {
     flag,
@@ -30,19 +24,12 @@ export function Country() {
     area,
     languages,
     borders,
-  } = country?.[0] ?? {}
-
-  useEffect(() => {
-    dispatch(loadCountry(params.countryAlpha3Code))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.countryAlpha3Code])
+  } = country
 
   return (
     <>
       {status === 'fetching' && (
-        <SpinnerEmpty>
-          Loading country with code {params.countryAlpha3Code}
-        </SpinnerEmpty>
+        <SpinnerEmpty>Loading country with code {countryCode}</SpinnerEmpty>
       )}
       {status === 'error' && <ErrorEmpty>{error.message}</ErrorEmpty>}
       {status === 'idle' && (

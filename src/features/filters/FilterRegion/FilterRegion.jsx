@@ -7,18 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectRegion, setRegion } from '@/features/filters/filtersSlice'
+import { useRegion } from '@/features/filters/useRegion'
 
 export function FilterRegion() {
-  const region = useSelector(selectRegion)
-  const dispatch = useDispatch()
+  const [region, setRegion] = useRegion()
 
   return (
-    <Select
-      value={region}
-      onValueChange={(value) => dispatch(setRegion(value))}
-    >
+    <Select value={region} onValueChange={(value) => setRegion(value)}>
       <SelectTrigger className='w-full md:max-w-60 bg-input'>
         <SelectValue placeholder='Select a Region' />
       </SelectTrigger>

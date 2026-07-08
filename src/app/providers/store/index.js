@@ -10,5 +10,6 @@ export const store = configureStore({
       thunk: {
         extraArgument: { countriesApi },
       },
+      serializableCheck: false,
     }),
 })

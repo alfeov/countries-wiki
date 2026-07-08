@@ -6,10 +6,11 @@ import {
 
 export const loadCountries = createAsyncThunk(
   '@@countries/load',
-  async (filters, { extra: { countriesApi }, rejectWithValue }) => {
+  (filters, { extra: { countriesApi }, rejectWithValue }) => {
     try {
-      return await countriesApi.getCountriesByParams(filters)
+      return countriesApi.getCountriesByParams(filters)
     } catch (error) {
+      console.error(error)
       return rejectWithValue(error)
     }
   },
@@ -35,7 +36,7 @@ const countriesSlice = createSlice({
         state.error = null
       })
       .addCase(loadCountries.fulfilled, (state, action) => {
-        countriesAdapter.setAll(state, action.payload)
+        countriesAdapter.setAll(state, action.payload.objects)
         state.status = 'idle'
       })
       .addCase(loadCountries.rejected, (state, action) => {

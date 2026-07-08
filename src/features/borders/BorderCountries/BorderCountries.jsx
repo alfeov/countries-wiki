@@ -1,20 +1,12 @@
 import { Link } from 'react-router'
 import { Badge } from '@/shared/ui/badge'
 import { ArrowUpRightIcon } from 'lucide-react'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
-import { loadBorders, selectAllBorders } from '@/features/borders/bordersSlice'
+import { useBorders } from '@/features/borders/useBorders'
 
 export function BorderCountries({ bordersCodes }) {
-  const { borders, status, error } = useSelector(selectAllBorders)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(loadBorders(bordersCodes))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { borders, status, error } = useBorders(bordersCodes)
 
   return (
     <footer className='grid gap-[2rem]'>
@@ -29,7 +21,7 @@ export function BorderCountries({ bordersCodes }) {
           ))}
         {status === 'error' && <ErrorEmpty>{error.message}</ErrorEmpty>}
         {status === 'idle' &&
-          borders?.flat()?.map((country) => (
+          borders?.map((country) => (
             <Link
               to={'/' + country.codes.alpha_3}
               key={country.codes.alpha_3}

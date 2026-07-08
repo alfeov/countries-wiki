@@ -2,14 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const loadBorders = createAsyncThunk(
   '@@borders/load',
-  async (borders, { extra: { countriesApi }, rejectWithValue }) => {
+  (borders, { extra: { countriesApi }, rejectWithValue }) => {
     try {
       const promises = borders?.map((border) =>
         countriesApi.getCountryName(border),
       )
-      const data = await Promise.all(promises)
+      const data = Promise.all(promises)
       return data
     } catch (error) {
+      console.error(error)
       return rejectWithValue(error)
     }
   },
@@ -32,7 +33,7 @@ const bordersSlice = createSlice({
         state.error = null
       })
       .addCase(loadBorders.fulfilled, (state, action) => {
-        state.borders = action.payload
+        state.borders = action.payload.map((data) => data.objects?.[0])
         state.status = 'idle'
       })
       .addCase(loadBorders.rejected, (state, action) => {

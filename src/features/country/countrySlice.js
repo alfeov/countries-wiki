@@ -5,13 +5,14 @@ export const loadCountry = createAsyncThunk(
   async (countryAlpha3Code, { extra: { countriesApi }, rejectWithValue }) => {
     try {
       const data = await countriesApi.getCountry(countryAlpha3Code)
-      if (data.length === 0) {
+      if (data.meta.total === 0) {
         throw new Error(
           `Country with code ${countryAlpha3Code} not found (404)`,
         )
       }
       return data
     } catch (error) {
+      console.error(error)
       return rejectWithValue(error)
     }
   },
@@ -34,7 +35,7 @@ const countrySlice = createSlice({
         state.error = null
       })
       .addCase(loadCountry.fulfilled, (state, action) => {
-        state.country = action.payload
+        state.country = action.payload.objects[0]
         state.status = 'idle'
       })
       .addCase(loadCountry.rejected, (state, action) => {
