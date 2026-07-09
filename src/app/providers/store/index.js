@@ -6,10 +6,11 @@ export const store = configureStore({
   reducer: rootReducer,
   devTools: import.meta.env.PROD !== 'production',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: { countriesApi },
-      },
-      serializableCheck: false,
-    }),
+    // getDefaultMiddleware({
+    //   thunk: {
+    //     extraArgument: { countriesApi },
+    //   },
+    //   serializableCheck: false,
+    // }),
+    getDefaultMiddleware().concat(countriesApi.middleware),
 })
