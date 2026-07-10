@@ -8,15 +8,21 @@ import {
   SelectValue,
 } from '@/shared/ui/select'
 import { useRegion } from '@/features/filters/useRegion'
+import { createMotionedComponent, sideVariant } from '@/shared/lib/motion'
+
+const MotionSelectTrigger = createMotionedComponent(SelectTrigger)
 
 export function FilterRegion() {
   const [region, setRegion] = useRegion()
 
   return (
     <Select value={region} onValueChange={(value) => setRegion(value)}>
-      <SelectTrigger className='w-full md:max-w-60 bg-input'>
+      <MotionSelectTrigger
+        {...sideVariant(200)}
+        className='w-full md:max-w-60 bg-input/50'
+      >
         <SelectValue placeholder='Select a Region' />
-      </SelectTrigger>
+      </MotionSelectTrigger>
       <SelectContent position='popper'>
         <SelectGroup>
           <SelectLabel>Regions</SelectLabel>

@@ -2,29 +2,55 @@ import { CountryItem } from '@/features/countries/CountryItem'
 import styles from './CountriesList.module.scss'
 import { SpinnerEmpty } from '@/shared/ui/SpinnerEmpty'
 import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
-import { useGetCountriesQuery } from '@/shared/api/countriesApi'
-// import { useCountries } from '@/features/countries/useCountries'
+import { useCountries } from '../useCountries'
+import { Button } from '@/shared/ui/button'
+import { FetchingIndicator } from '@/shared/ui/FetchingIndicator/FetchingIndicator'
+import {
+  createMotionedComponent,
+  itemVariants,
+  listVariant,
+} from '@/shared/lib/motion'
+import { motion } from 'motion/react'
+
+const MotionCountryItem = createMotionedComponent(CountryItem)
 
 export function CountriesList() {
-  // const { countries, status, error } = useCountries()
-  const { data, isLoading, error } = useGetCountriesQuery()
-
-  console.log(data)
+  const {
+    countries,
+    isFetching,
+    isLoading,
+    isError,
+    isSuccess,
+    error,
+    hasNextPage,
+    fetchNextPage,
+  } = useCountries()
 
   return (
     <>
-      {/* {status === 'fetching' && <SpinnerEmpty>Loading countries</SpinnerEmpty>}
-      {status === 'error' && <ErrorEmpty>{error.message}</ErrorEmpty>}
-      {status === 'idle' && countries?.length === 0 && (
+      <FetchingIndicator
+        conditions={!isLoading && isFetching}
+        wrapperClassName='pt-[14.5rem] md:pt-[7rem]'
+      />
+      {isLoading && <SpinnerEmpty>Loading countries</SpinnerEmpty>}
+      {isError && <ErrorEmpty>{error.message}</ErrorEmpty>}
+      {isSuccess && countries?.length === 0 && (
         <ErrorEmpty>There are no countries for your query</ErrorEmpty>
       )}
-      {status === 'idle' && (
-        <div className={styles.list}>
+      {isSuccess && (
+        <motion.div {...listVariant()} className={styles.list}>
           {countries?.map((country) => (
-            <CountryItem key={country.codes.alpha_3} {...country} />
+            <MotionCountryItem
+              variants={itemVariants}
+              key={country.codes.alpha_3}
+              {...country}
+            />
           ))}
-        </div>
-      )} */}
+        </motion.div>
+      )}
+      {isSuccess && hasNextPage && (
+        <Button onClick={fetchNextPage}>Load more countries</Button>
+      )}
     </>
   )
 }

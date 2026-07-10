@@ -1,16 +1,9 @@
-import { combineReducers } from 'redux'
 import { themeReducer } from '@/features/theme/themeSlice'
 import { filtersReducer } from '@/features/filters/filtersSlice'
 import { countriesApi } from '@/shared/api/countriesApi'
-// import { countriesReducer } from '@/features/countries/countriesSlice'
-// import { countryReducer } from '@/features/country/countrySlice'
-// import { bordersReducer } from '@/features/borders/bordersSlice'
+import { combineSlices } from '@reduxjs/toolkit'
 
-export const rootReducer = combineReducers({
-  [countriesApi.reducerPath]: countriesApi.reducer,
-  // countries: countriesReducer,
-  // country: countryReducer,
-  // borders: bordersReducer,
+export const rootReducer = combineSlices(countriesApi, {
   filters: filtersReducer,
   theme: themeReducer,
 })

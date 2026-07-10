@@ -1,22 +1,15 @@
-// import { useDispatch, useSelector } from 'react-redux'
-// import { selectFilters } from '@/features/filters/filtersSlice'
-// import { useEffect } from 'react'
-// import {
-//   countriesSelectors,
-//   loadCountries,
-//   selectAllCountries,
-// } from '@/features/countries/countriesSlice'
+import { selectFilters } from '@/features/filters/filtersSlice'
+import { useGetCountriesInfiniteQuery } from '@/shared/api/countriesApi'
+import { useSelector } from 'react-redux'
 
-// export function useCountries() {
-//   const dispatch = useDispatch()
-//   const filters = useSelector(selectFilters)
-//   const { status, error } = useSelector(selectAllCountries)
-//   const countries = useSelector(countriesSelectors.selectAll)
-
-//   useEffect(() => {
-//     dispatch(loadCountries(filters))
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [filters])
-
-//   return { countries, status, error }
-// }
+export function useCountries() {
+  const filters = useSelector(selectFilters)
+  return useGetCountriesInfiniteQuery(filters, {
+    selectFromResult: ({ data, ...rest }) => {
+      return {
+        ...rest,
+        countries: data?.pages?.flatMap((page) => page?.objects) ?? [],
+      }
+    },
+  })
+}

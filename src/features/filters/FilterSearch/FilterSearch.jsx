@@ -7,15 +7,18 @@ import {
   InputGroupInput,
 } from '@/shared/ui/input-group'
 import { useSearchForm } from '@/features/filters/useSearchForm'
+import { motion } from 'motion/react'
+import { sideVariant } from '@/shared/lib/motion'
 
 export function FilterSearch() {
   const [{ field, fieldState }, { handleSubmit, onSubmit }] = useSearchForm()
 
   return (
-    <form
+    <motion.form
       onSubmit={handleSubmit(onSubmit)}
       className='md:w-fit'
       autoComplete='off'
+      {...sideVariant(-200)}
     >
       <Field data-invalid={fieldState.invalid} className='gap-[0.5rem]'>
         <InputGroup className='md:w-fit'>
@@ -34,6 +37,6 @@ export function FilterSearch() {
           {fieldState.error?.message}
         </FieldDescription>
       </Field>
-    </form>
+    </motion.form>
   )
 }

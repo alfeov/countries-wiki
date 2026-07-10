@@ -11,10 +11,10 @@ import { Skeleton } from '@/shared/ui/skeleton'
 import { ImageWithLoader } from '@/shared/ui/ImageWithLoader'
 
 export function CountryItem(props) {
-  const { flag, names, population, region, capitals, codes } = props
+  const { flag, names, population, region, capitals, codes, ref } = props
 
   return (
-    <Card className='pt-0'>
+    <Card className='pt-0' ref={ref}>
       <ImageWithLoader
         src={flag?.url_png || 'errorSrc'} // to perform empty string
         alt={names?.common}
