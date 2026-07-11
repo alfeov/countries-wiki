@@ -72,8 +72,8 @@ export const countriesApi = createApi({
     getBordersNames: build.query({
       // queryFn: async () => {
       //   await wait(3000)
-      //   const result1 = { data: { data: { objects: [data.data.objects[2]] } } }
-      //   const result2 = { data: { data: { objects: [data.data.objects[3]] } } }
+      //   const result1 = { objects: [data.data.objects[2]] }
+      //   const result2 = { objects: [data.data.objects[3]] }
       //   return { data: [result1, result2] }
       // },
       queryFn: async (bordersCodes, _, __, fetchWithBQ) => {
@@ -89,7 +89,7 @@ export const countriesApi = createApi({
         const result = {}
 
         await Promise.all(promises)
-          .then((data) => (result.data = data))
+          .then((data) => (result.data = data.map((data) => data.data.data)))
           .catch((error) => (result.error = error))
 
         return result.data ? { data: result.data } : { error: result.error }

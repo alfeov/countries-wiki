@@ -4,7 +4,7 @@ export function useBorders(bordersCodes) {
   return useGetBordersNamesQuery(bordersCodes, {
     selectFromResult: ({ data, ...rest }) => ({
       ...rest,
-      borders: data?.map((data) => data?.data?.data?.objects?.[0]) ?? [],
+      borders: data?.map((data) => data?.objects?.[0]) ?? [],
     }),
   })
 }
