@@ -8,7 +8,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const storageKey = 'countries-wiki/isDarkTheme'
 
 const themeSlice = createSlice({
-  name: '@@theme',
+  name: 'theme',
   initialState: {
     isDarkTheme: getLocalStorageData(storageKey) ?? isPreferredDarkTheme(),
   },
@@ -19,9 +19,11 @@ const themeSlice = createSlice({
       setLocalStorageData(storageKey, isDarkTheme)
     },
   },
+  selectors: {
+    selectIsDarkTheme: (state) => state.isDarkTheme,
+  },
 })
 
 export const themeReducer = themeSlice.reducer
 export const { toggleTheme } = themeSlice.actions
-
-export const selectIsDarkTheme = (state) => state.theme.isDarkTheme
+export const { selectIsDarkTheme } = themeSlice.selectors
