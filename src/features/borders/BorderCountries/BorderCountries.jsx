@@ -30,7 +30,7 @@ export function BorderCountries({ bordersCodes }) {
               key={border + 'skeleton'}
             />
           ))}
-        {isError && <ErrorEmpty>{error.message}</ErrorEmpty>}
+        {isError && <ErrorEmpty>{error.message || error.error}</ErrorEmpty>}
         {isSuccess &&
           !isFetching &&
           borders?.map((country) => (

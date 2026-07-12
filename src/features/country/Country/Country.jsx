@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 
 import { motion } from 'motion/react'
-import { sideVariant } from '@/shared/lib/motion'
+import { createMotionedComponent, sideVariant } from '@/shared/lib/motion'
 
 import { ImageWithLoader } from '@/shared/ui/ImageWithLoader'
 import { Button } from '@/shared/ui/button'
@@ -13,6 +13,8 @@ import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
 
 import { useCountry } from '@/features/country/useCountry'
 import { FetchingIndicator } from '@/shared/ui/FetchingIndicator/FetchingIndicator'
+
+const MotionLink = createMotionedComponent(Link)
 
 export function Country() {
   const {
@@ -48,18 +50,22 @@ export function Country() {
       {isLoading && (
         <SpinnerEmpty>Loading country with code {countryCode}</SpinnerEmpty>
       )}
-      {isError && <ErrorEmpty>{error.message}</ErrorEmpty>}
+      {isError && <ErrorEmpty>{error.message || error.error}</ErrorEmpty>}
       {isSuccess && country.length === 0 && (
         <ErrorEmpty>Country with code {countryCode} not found (404)</ErrorEmpty>
       )}
       {isSuccess && country.length > 0 && (
         <div className='grid gap-[3rem]'>
-          <Link to='/' className='w-fit rounded-4xl'>
-            <Button>
+          <MotionLink
+            to='/'
+            className='w-fit rounded-4xl'
+            {...sideVariant(-200)}
+          >
+            <Button tabIndex='-1'>
               <ArrowLeft data-icon='inline-start' />
               Back
             </Button>
-          </Link>
+          </MotionLink>
           <div className='grid gap-[3rem] lg:gap-[4rem] lg:grid-cols-2'>
             <motion.div {...sideVariant(-200)}>
               <ImageWithLoader

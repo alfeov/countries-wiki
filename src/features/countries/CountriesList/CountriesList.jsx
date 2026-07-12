@@ -33,7 +33,7 @@ export function CountriesList() {
         wrapperClassName='pt-[14.5rem] md:pt-[7rem]'
       />
       {isLoading && <SpinnerEmpty>Loading countries</SpinnerEmpty>}
-      {isError && <ErrorEmpty>{error.message}</ErrorEmpty>}
+      {isError && <ErrorEmpty>{error.message || error.error}</ErrorEmpty>}
       {isSuccess && countries?.length === 0 && (
         <ErrorEmpty>There are no countries for your query</ErrorEmpty>
       )}

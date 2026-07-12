@@ -42,7 +42,9 @@ export function CountryItem(props) {
       </CardHeader>
       <CardFooter>
         <Link to={codes?.alpha_3} className='w-full rounded-4xl'>
-          <Button className='w-full'>View Details</Button>
+          <Button className='w-full' tabIndex='-1'>
+            View Details
+          </Button>
         </Link>
       </CardFooter>
     </Card>

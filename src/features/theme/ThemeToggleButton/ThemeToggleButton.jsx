@@ -7,10 +7,14 @@ export function ThemeToggleButton() {
   const toggleTheme = useToggleTheme()
 
   return (
-    <Button variant='outline' size='icon' onClick={toggleTheme}>
+    <Button
+      variant='outline'
+      size='icon'
+      onClick={toggleTheme}
+      aria-label='Toggle theme'
+    >
       <Sun className={styles.sun} />
       <Moon className={styles.moon} />
-      <span className={styles.srOnly}>Toggle theme</span>
     </Button>
   )
 }
