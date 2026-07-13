@@ -11,12 +11,14 @@ import { BorderCountries } from '@/features/borders/BorderCountries'
 import { SpinnerEmpty } from '@/shared/ui/SpinnerEmpty'
 import { ErrorEmpty } from '@/shared/ui/ErrorEmpty'
 
+import { useScrollToTop } from '@/features/country/useScrollToTop'
 import { useCountry } from '@/features/country/useCountry'
 import { FetchingIndicator } from '@/shared/ui/FetchingIndicator/FetchingIndicator'
 
 const MotionLink = createMotionedComponent(Link)
 
 export function Country() {
+  useScrollToTop()
   const {
     country,
     countryCode,
@@ -55,7 +57,7 @@ export function Country() {
         <ErrorEmpty>Country with code {countryCode} not found (404)</ErrorEmpty>
       )}
       {isSuccess && country.length > 0 && (
-        <div className='grid gap-[3rem]'>
+        <div className='grid gap-[3rem] overflow-hidden'>
           <MotionLink
             to='/'
             className='w-fit rounded-4xl'
